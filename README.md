@@ -89,10 +89,33 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Start the postgreSql db
+```bash
+docker-compose up -d
+```
+- Exec into the db container
+```bash
+docker exec -it <container_id> bash
+```
 
-## License
+- Install sequelize dependencies
+```
+npm install --save @nestjs/sequelize sequelize sequelize-typescript postgresql
+npm install --save-dev @types/sequelize
+npm install pg pg-hstore
+npm install --save-dev @types/pg
+npm install @nestjs/mapped-types
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- psql into the pg and execute sql
+```bash
+docker exec -it my-postgres psql -U postgres
+```
+
+- 
+The error duplicate key value violates unique constraint "authors_pkey" means that when your NestJS application tries to insert a new author (without providing an ID, as intended), PostgreSQL's internal mechanism for assigning the next ID (called a Sequence) is suggesting a number (say, 5) that is already in use by an existing row in your authors table
+Find the sequence name associated with the authors table's ID column
+and reset its value to the maximum ID + 1.
+```
+SELECT setval(pg_get_serial_sequence('authors', 'id'), coalesce(max(id), 1), false) FROM authors;
+```

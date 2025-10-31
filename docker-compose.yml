@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  pgdb:
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: book_song_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data:/var/lib/postgresql    

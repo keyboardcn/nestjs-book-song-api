@@ -105,11 +105,18 @@ npm install --save-dev @types/sequelize
 npm install pg pg-hstore
 npm install --save-dev @types/pg
 npm install @nestjs/mapped-types
+npm install --save-dev sequelize-cli
 ```
 
 - psql into the pg and execute sql
 ```bash
 docker exec -it my-postgres psql -U postgres
+```
+
+- migration command
+```bash
+npx sequelize-cli db:migrate
+npx sequelize-cli db:migrate:undo
 ```
 
 - 

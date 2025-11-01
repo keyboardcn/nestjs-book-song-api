@@ -4,7 +4,6 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Book } from 'src/models/book.model';
 import * as sequelizeTypescript from 'sequelize-typescript';
 import { CrudService } from 'src/generics/crud.service';
-import { CreateBookDto } from 'src/models/create-book.dto';
 
 @Injectable()
 export class BooksService extends CrudService<Book> {

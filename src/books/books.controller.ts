@@ -12,8 +12,6 @@ import { BooksService } from './books.service';
 import { RolesGuard } from 'src/guard/roles.guard';
 import { Roles } from 'src/guard/roles.decorator';
 import { LoggingInterceptor } from 'src/interceptors/logging.interceptor';
-import { BookInterface } from './books.interface';
-import { CreateBookDto } from 'src/models/create-book.dto';
 import * as sequelize from 'sequelize';
 import { Book } from 'src/models/book.model';
 

@@ -106,6 +106,7 @@ npm install pg pg-hstore
 npm install --save-dev @types/pg
 npm install @nestjs/mapped-types
 npm install --save-dev sequelize-cli
+npm install @nestjs/cache-manager cache-manager
 ```
 
 - psql into the pg and execute sql

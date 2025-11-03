@@ -1,7 +1,7 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { AuthorsController } from "./authors.controller";
-import { AuthorsService } from "./authors.service";
-import { APP_KEY_TOKEN } from "src/providers/app.constant";
+import { Test, TestingModule } from '@nestjs/testing';
+import { AuthorsController } from './authors.controller';
+import { AuthorsService } from './authors.service';
+import { APP_KEY_TOKEN } from 'src/providers/app.constant';
 
 const mockAuthorsService = {
   findAuthorBooks: jest.fn(),

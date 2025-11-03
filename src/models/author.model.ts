@@ -1,4 +1,4 @@
-import { Column, Model, Table, DataType, HasMany,  } from 'sequelize-typescript';
+import { Column, Model, Table, DataType, HasMany } from 'sequelize-typescript';
 import { Book } from './book.model';
 
 @Table({ tableName: 'authors' })
@@ -12,7 +12,7 @@ export class Author extends Model {
   @Column
   declare lastname: string;
 
-  @Column({ unique: true , allowNull: false })
+  @Column({ unique: true, allowNull: false })
   declare email: string;
 
   @HasMany(() => Book)

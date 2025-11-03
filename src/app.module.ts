@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { BooksModule } from './books/books.module';
 import { CoreConfigModule } from './core-config.module';
 import { Book } from './models/book.model';
 import { Author } from './models/author.model';
+import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -20,6 +22,16 @@ import { Author } from './models/author.model';
     }),
     BooksModule,
     CoreConfigModule,
+    CacheModule.register({
+      ttl: 5000,
+      isGlobal: true,
+    }),
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
   ],
   controllers: [],
 })

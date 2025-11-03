@@ -14,9 +14,10 @@ import { Roles } from 'src/guard/roles.decorator';
 import { LoggingInterceptor } from 'src/interceptors/logging.interceptor';
 import * as sequelize from 'sequelize';
 import { Book } from 'src/models/book.model';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Controller('books')
-@UseInterceptors(LoggingInterceptor)
+@UseInterceptors(LoggingInterceptor, CacheInterceptor)
 @UseGuards(RolesGuard)
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}

@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthorsController } from './authors.controller';
 import { AuthorsService } from './authors.service';
 import { APP_KEY_TOKEN } from 'src/providers/app.constant';
+import { CacheModule } from '@nestjs/cache-manager';
 
 const mockAuthorsService = {
   findAuthorBooks: jest.fn(),
@@ -14,6 +15,7 @@ describe('AuthorsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [CacheModule.register({ttl: 5000})],
       controllers: [AuthorsController],
       providers: [
         {
@@ -48,6 +50,7 @@ describe('AuthorsController', () => {
 
   describe('create', () => {
     it('should call authorsService.create with the correct data', async () => {
+
       const newAuthor = { firstname: 'New', lastname: 'Author' };
       mockAuthorsService.create.mockResolvedValue({ id: 2, ...newAuthor });
 

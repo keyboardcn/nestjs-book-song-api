@@ -8,6 +8,8 @@ import { Author } from './models/author.model';
 import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TasksModule } from './schedules/tasks.module';
+import { BullModule } from '@nestjs/bullmq';
+import { AudiosModule } from './queues/audios.module';
 @Module({
   imports: [
     SequelizeModule.forRoot({
@@ -21,6 +23,12 @@ import { TasksModule } from './schedules/tasks.module';
       synchronize: true,
       models: [Book, Author],
     }),
+    BullModule.forRoot({
+      connection: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
     BooksModule,
     CoreConfigModule,
     CacheModule.register({
@@ -28,7 +36,8 @@ import { TasksModule } from './schedules/tasks.module';
       isGlobal: true,
     }),
     ScheduleModule.forRoot(),
-    TasksModule
+    TasksModule,
+    AudiosModule,
   ],
   providers: [
     {

@@ -109,6 +109,7 @@ npm install --save-dev sequelize-cli
 npm install @nestjs/cache-manager cache-manager
 npm install class-transformer
 npm install --save @nestjs/schedule
+npm install --save @nestjs/bullmq bullmq
 ```
 
 - psql into the pg and execute sql

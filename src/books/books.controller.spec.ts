@@ -3,6 +3,8 @@ import { BooksController } from './books.controller';
 import { BooksService } from './books.service';
 import { APP_KEY_TOKEN } from 'src/providers/app.constant';
 import { create } from 'domain';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { CacheModule } from '@nestjs/cache-manager';
 
 const mockBookService = {
   findAll: jest.fn(),
@@ -11,12 +13,16 @@ const mockBookService = {
   create: jest.fn(),
 };
 
+const mockCacheInterceptor = {
+  intercept: jest.fn(),
+};
 describe('BooksController', () => {
   let booksController: BooksController;
   let booksService: BooksService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [CacheModule.register({ttl: 5000})],
       controllers: [BooksController],
       providers: [
         BooksService,

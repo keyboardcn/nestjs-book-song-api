@@ -6,7 +6,8 @@ import { CoreConfigModule } from './core-config.module';
 import { Book } from './models/book.model';
 import { Author } from './models/author.model';
 import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
-
+import { ScheduleModule } from '@nestjs/schedule';
+import { TasksModule } from './schedules/tasks.module';
 @Module({
   imports: [
     SequelizeModule.forRoot({
@@ -26,6 +27,8 @@ import { CacheModule, CacheInterceptor } from '@nestjs/cache-manager';
       ttl: 5000,
       isGlobal: true,
     }),
+    ScheduleModule.forRoot(),
+    TasksModule
   ],
   providers: [
     {

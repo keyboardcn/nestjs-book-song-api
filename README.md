@@ -108,6 +108,7 @@ npm install @nestjs/mapped-types
 npm install --save-dev sequelize-cli
 npm install @nestjs/cache-manager cache-manager
 npm install class-transformer
+npm install --save @nestjs/schedule
 ```
 
 - psql into the pg and execute sql

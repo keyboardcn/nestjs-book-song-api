@@ -9,6 +9,7 @@ import {
   Post,
   UseGuards,
   UseInterceptors,
+  Version
 } from '@nestjs/common';
 import { AuthorsService } from './authors.service';
 import { RolesGuard } from 'src/guard/roles.guard';
@@ -19,7 +20,7 @@ import { AuthorEntity, AuthorInterface } from './author.interface';
 import * as sequelize from 'sequelize';
 import { Author } from 'src/models/author.model';
 
-@Controller('authors')
+@Controller({path: 'authors',  version: 'v1' })
 @UseInterceptors(LoggingInterceptor, CacheInterceptor)
 @UseGuards(RolesGuard)
 export class AuthorsController {

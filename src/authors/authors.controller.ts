@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Get,
   Param,
@@ -14,7 +15,7 @@ import { RolesGuard } from 'src/guard/roles.guard';
 import { Roles } from 'src/guard/roles.decorator';
 import { LoggingInterceptor } from 'src/interceptors/logging.interceptor';
 import { CacheInterceptor } from '@nestjs/cache-manager';
-import { AuthorInterface } from './author.interface';
+import { AuthorEntity, AuthorInterface } from './author.interface';
 import * as sequelize from 'sequelize';
 import { Author } from 'src/models/author.model';
 
@@ -30,10 +31,16 @@ export class AuthorsController {
     return this.authorsService.findAll();
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
   @Roles(['user'])
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.authorsService.findByPk(id);
+  async findOne(@Param('id', ParseIntPipe) id: number){
+    const rst = await this.authorsService.findByPk(id);
+    if (!rst) {
+      return null;
+    }
+    const plainRst = rst.get({ plain: true });
+    return new AuthorEntity(plainRst as unknown as AuthorEntity);
   }
 
   @Get(':id/books')

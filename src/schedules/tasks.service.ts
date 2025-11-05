@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression, SchedulerRegistry } from '@nestjs/schedule';
 
 @Injectable()
 export class TasksService {
+  private readonly logger = new Logger(TasksService.name);
   constructor(private schedulerRegistry: SchedulerRegistry) {}
 
   @Cron(CronExpression.EVERY_30_SECONDS, {
@@ -10,7 +11,7 @@ export class TasksService {
   })
   handleCron() {
     const date = new Date();
-    console.log(`Current Time: ${date.toISOString()}`);
+    this.logger.log(`Current Time: ${date.toISOString()}`);
   }
 
   // Scheduled task to run every 5 minutes
@@ -18,20 +19,20 @@ export class TasksService {
     name: 'cleanupTask',
   })
   handleCleanup() {
-    console.log('Performing cleanup task...');
+    this.logger.log('Performing cleanup task...');
     // Add your cleanup logic here
     const job = this.schedulerRegistry.getCronJob('logTimeTask');
     job.stop();
-    console.log('Stopped logTimeTask cron job.');
+    this.logger.log('Stopped logTimeTask cron job.');
   }
 
   @Cron(CronExpression.EVERY_10_MINUTES, {
     name: 'reStartLogTimeTask',
   })
   reStartLogTimeTask() {
-    console.log('This task restart.');
+    this.logger.log('This task restart.');
     const job = this.schedulerRegistry.getCronJob('logTimeTask');
     job.start();
-    console.log(`Restarted ${job.name} cron job.`);
+    this.logger.log(`Restarted ${job.name} cron job.`);
   }
 }

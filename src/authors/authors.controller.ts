@@ -20,6 +20,9 @@ import { AuthorEntity, AuthorInterface } from './author.interface';
 import * as sequelize from 'sequelize';
 import { Author } from 'src/models/author.model';
 
+/** versioning control using headers:
+ * must have header 'Custom-Header: v1' to access v1 routes
+ */
 @Controller({path: 'authors',  version: 'v1' })
 @UseInterceptors(LoggingInterceptor, CacheInterceptor)
 @UseGuards(RolesGuard)

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { APP_KEY_TOKEN } from 'src/providers/app.constant';
 import { InjectModel } from '@nestjs/sequelize';
 import { Author } from 'src/models/author.model';
@@ -8,13 +8,14 @@ import { CrudService } from 'src/generics/crud.service';
 @Injectable()
 export class AuthorsService extends CrudService<Author> {
   private readonly apiKey: string;
+  private readonly logger = new Logger(AuthorsService.name);
   constructor(
     @Inject(APP_KEY_TOKEN) apiKey: string,
     @InjectModel(Author) authorModel: sequelizeTypescript.ModelCtor<Author>,
   ) {
     super(authorModel);
     this.apiKey = apiKey;
-    console.log('AuthorsService initialized with API Key:', this.apiKey);
+    this.logger.log('Initialized with API Key:', this.apiKey);
   }
 
   async findByLastName(lastname: string): Promise<Author[]> {
@@ -29,7 +30,7 @@ export class AuthorsService extends CrudService<Author> {
       raw: false,
       nest: true,
     })) as Author;
-    console.log(author);
+    this.logger.log(author);
     return author ? author.books : [];
   }
 }

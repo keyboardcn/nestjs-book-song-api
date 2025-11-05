@@ -1,9 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { VersioningType } from '@nestjs/common';
+import { ConsoleLogger, VersioningType } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: new ConsoleLogger({
+      logLevels: ['error', 'warn', 'debug', 'fatal', 'log'],
+      json: false,
+    }),
+  });
   // Two ways to set global prefix with versioning
   /**
    * Way 1: set global prefix with version in URI

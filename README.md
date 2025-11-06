@@ -110,6 +110,8 @@ npm install @nestjs/cache-manager cache-manager
 npm install class-transformer
 npm install --save @nestjs/schedule
 npm install --save @nestjs/bullmq bullmq
+npm i cookie-parser
+npm i -D @types/cookie-parser
 ```
 
 - psql into the pg and execute sql

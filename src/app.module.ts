@@ -10,6 +10,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { TasksModule } from './schedules/tasks.module';
 import { BullModule } from '@nestjs/bullmq';
 import { AudiosModule } from './queues/audios.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     SequelizeModule.forRoot({
@@ -38,6 +39,7 @@ import { AudiosModule } from './queues/audios.module';
     ScheduleModule.forRoot(),
     TasksModule,
     AudiosModule,
+    AuthModule
   ],
   providers: [
     {

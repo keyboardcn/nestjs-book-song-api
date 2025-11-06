@@ -9,7 +9,7 @@ import {
   Post,
   UseGuards,
   UseInterceptors,
-  Version
+  Version,
 } from '@nestjs/common';
 import { AuthorsService } from './authors.service';
 import { RolesGuard } from 'src/guard/roles.guard';
@@ -23,7 +23,7 @@ import { Author } from 'src/models/author.model';
 /** versioning control using headers:
  * must have header 'Custom-Header: v1' to access v1 routes
  */
-@Controller({path: 'authors',  version: 'v1' })
+@Controller({ path: 'authors', version: 'v1' })
 @UseInterceptors(LoggingInterceptor, CacheInterceptor)
 @UseGuards(RolesGuard)
 export class AuthorsController {
@@ -38,7 +38,7 @@ export class AuthorsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
   @Roles(['user'])
-  async findOne(@Param('id', ParseIntPipe) id: number){
+  async findOne(@Param('id', ParseIntPipe) id: number) {
     const rst = await this.authorsService.findByPk(id);
     if (!rst) {
       return null;

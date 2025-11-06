@@ -20,9 +20,10 @@ export class TasksService {
   handleCron() {
     const date = new Date();
     this.logger.log(`Current Time: ${date.toISOString()}`);
-    this.eventEmitter.emit('time.logged', 
-      { mark: date, payload: 'logTimeTask' } as TimeLoggedEvent<Date>
-    );
+    this.eventEmitter.emit('time.logged', {
+      mark: date,
+      payload: 'logTimeTask',
+    } as TimeLoggedEvent<Date>);
   }
 
   // Scheduled task to run every 5 minutes
@@ -35,9 +36,10 @@ export class TasksService {
     const job = this.schedulerRegistry.getCronJob('logTimeTask');
     job.stop();
     this.logger.log('Stopped logTimeTask cron job.');
-    this.eventEmitter.emit('time.cleaned', 
-      { mark: new Date().toISOString(), payload: 'cleanupTask' } as TimeLoggedEvent<string>
-    );
+    this.eventEmitter.emit('time.cleaned', {
+      mark: new Date().toISOString(),
+      payload: 'cleanupTask',
+    } as TimeLoggedEvent<string>);
   }
 
   @Cron(CronExpression.EVERY_10_MINUTES, {
@@ -48,8 +50,9 @@ export class TasksService {
     const job = this.schedulerRegistry.getCronJob('logTimeTask');
     job.start();
     this.logger.log(`Restarted ${job.name} cron job.`);
-    this.eventEmitter.emit('time.restarted', 
-      { mark: job.name, payload: null } as TimeLoggedEvent<string>
-    );
+    this.eventEmitter.emit('time.restarted', {
+      mark: job.name,
+      payload: null,
+    } as TimeLoggedEvent<string>);
   }
 }

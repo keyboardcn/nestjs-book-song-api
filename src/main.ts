@@ -18,13 +18,13 @@ async function bootstrap() {
    *    type:  VersioningType.URI,
    *   })
    * then call api with url like: /api/v1/authors;
-   *  */ 
+   *  */
   /**
    * Way 2: set global prefix with version in custom header
    * as we did in AuthorsController with @Controller({path: 'authors',  version: 'v1' })
    * then call api with header 'Custom-Header': 'v1'
    */
-  
+
   app.enableVersioning({
     type: VersioningType.HEADER,
     header: 'Custom-Header',

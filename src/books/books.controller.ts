@@ -27,10 +27,10 @@ export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   /**
-   * 
-   * @param request 
+   *
+   * @param request
    * @returns Book[]
-   * 
+   *
    * @usage: headers.Cookie: "sessionId=1; anotherCookie=abc"
    */
   @Get()

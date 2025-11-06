@@ -22,7 +22,7 @@ describe('BooksController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [CacheModule.register({ttl: 5000})],
+      imports: [CacheModule.register({ ttl: 5000 })],
       controllers: [BooksController],
       providers: [
         BooksService,

@@ -1,4 +1,4 @@
-import { Exclude } from "class-transformer";
+import { Exclude } from 'class-transformer';
 
 export interface AuthorInterface {
   id: number;
@@ -15,8 +15,8 @@ export class AuthorEntity {
   email: string;
 
   @Exclude()
-  password: string; 
-  
+  password: string;
+
   constructor(partial: Partial<AuthorEntity>) {
     Object.assign(this, partial);
   }

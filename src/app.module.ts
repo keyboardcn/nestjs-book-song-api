@@ -14,6 +14,8 @@ import { AuthModule } from './auth/auth.module';
 import { EventEmitter } from 'stream';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { FileController } from './streaming/file.controller';
+import { HttpModule } from '@nestjs/axios';
+import { DogsModule } from './dogs/dogs.moudle';
 @Module({
   imports: [
     SequelizeModule.forRoot({
@@ -45,7 +47,8 @@ import { FileController } from './streaming/file.controller';
     ScheduleModule.forRoot(),
     TasksModule,
     AudiosModule,
-    AuthModule
+    AuthModule,
+    DogsModule
   ],
   providers: [
     {

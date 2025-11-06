@@ -6,8 +6,6 @@ export function loggerMiddleware(
   next: NextFunction,
 ) {
   const logger = new Logger('LoggerMiddleware');
-  logger.log(
-    `${req.method} ${req.originalUrl}`,
-  );
+  logger.log(`${req.method} ${req.originalUrl}`);
   next();
 }

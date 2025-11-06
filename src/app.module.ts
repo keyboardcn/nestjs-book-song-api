@@ -11,6 +11,8 @@ import { TasksModule } from './schedules/tasks.module';
 import { BullModule } from '@nestjs/bullmq';
 import { AudiosModule } from './queues/audios.module';
 import { AuthModule } from './auth/auth.module';
+import { EventEmitter } from 'stream';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 @Module({
   imports: [
     SequelizeModule.forRoot({
@@ -29,6 +31,9 @@ import { AuthModule } from './auth/auth.module';
         host: 'localhost',
         port: 6379,
       },
+    }),
+    EventEmitterModule.forRoot({
+      wildcard: true,
     }),
     BooksModule,
     CoreConfigModule,

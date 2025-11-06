@@ -112,6 +112,7 @@ npm install --save @nestjs/schedule
 npm install --save @nestjs/bullmq bullmq
 npm i cookie-parser
 npm i -D @types/cookie-parser
+npm i --save @nestjs/event-emitter
 ```
 
 - psql into the pg and execute sql

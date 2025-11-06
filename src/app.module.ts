@@ -13,6 +13,7 @@ import { AudiosModule } from './queues/audios.module';
 import { AuthModule } from './auth/auth.module';
 import { EventEmitter } from 'stream';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { FileController } from './streaming/file.controller';
 @Module({
   imports: [
     SequelizeModule.forRoot({
@@ -52,6 +53,6 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
       useClass: CacheInterceptor,
     },
   ],
-  controllers: [],
+  controllers: [FileController],
 })
 export class AppModule {}

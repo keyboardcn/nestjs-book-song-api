@@ -37,8 +37,9 @@ export class BooksController {
   @UseGuards(AuthGuardService)
   @Roles(['admin'])
   findAll(@Req() request: express.Request) {
+    //request.session.visits =  request.session?.visits ? request.session.visits + 1: 1;
     // no more cookie here
-    this.logger.log(`Req cookie: ${JSON.stringify(request.cookies)}`);
+    this.logger.log(`Req session: ${JSON.stringify(request.session)}`);
     // expect signed cookie
     this.logger.log(`${JSON.stringify(request.signedCookies)}`);
     return this.booksService.findAll();

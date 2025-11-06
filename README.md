@@ -114,7 +114,8 @@ npm i cookie-parser
 npm i -D @types/cookie-parser
 npm i --save @nestjs/event-emitter
 npm i --save @nestjs/axios axios
-
+npm i express-session
+npm i -D @types/express-session
 ```
 
 - psql into the pg and execute sql

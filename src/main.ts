@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConsoleLogger, VersioningType } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
+import session from 'express-session';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -30,7 +31,18 @@ async function bootstrap() {
     header: 'Custom-Header',
   });
 
-  app.use(cookieParser('mysecret'));
+  app.use(cookieParser('my-secret'));
+  app.use(
+    session({
+      secret: 'my-secret',
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 3600000
+      },
+    })
+  )
 
   await app.listen(process.env.PORT ?? 3000);
 }

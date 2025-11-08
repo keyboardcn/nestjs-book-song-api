@@ -5,6 +5,23 @@ import { APP_KEY_TOKEN } from 'src/providers/app.constant';
 import { create } from 'domain';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { CacheModule } from '@nestjs/cache-manager';
+import { signedCookies } from 'cookie-parser';
+import express from 'express';
+
+const mockSession = {
+  userId: 1,
+  visits: 1,
+  cookie: {
+    originalMaxAge: 3600000,
+  },
+  save: jest.fn((clb) => (clb ? clb() : undefined)),
+};
+
+const mockRequest = {
+  session: mockSession,
+  signedCookies: { 'connect.sid': 's:12345' },
+  cookies: {},
+} as unknown as express.Request;
 
 const mockBookService = {
   findAll: jest.fn(),
@@ -51,7 +68,7 @@ describe('BooksController', () => {
       { id: 2, title: 'Book Two' },
     ];
     mockBookService.findAll.mockReturnValue(expectedResult);
-    expect(booksController.findAll()).toBe(expectedResult);
+    expect(booksController.findAll(mockRequest)).toBe(expectedResult);
   });
 
   describe('create', () => {

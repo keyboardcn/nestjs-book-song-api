@@ -18,12 +18,6 @@ export class AuthorsService extends CrudService<Author> {
     this.logger.log('Initialized with API Key:', this.apiKey);
   }
 
-  async findByLastName(lastname: string): Promise<Author[]> {
-    return this.model.findAll({
-      where: { lastname: lastname as string },
-    });
-  }
-
   async findAuthorBooks(author_id: number): Promise<any[]> {
     const author = (await this.model.findByPk(author_id, {
       include: [{ all: true }],

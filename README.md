@@ -116,6 +116,7 @@ npm i --save @nestjs/event-emitter
 npm i --save @nestjs/axios axios
 npm i express-session
 npm i -D @types/express-session
+npm install --save @nestjs/jwt
 ```
 
 - psql into the pg and execute sql

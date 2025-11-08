@@ -11,11 +11,12 @@ import { TasksModule } from './schedules/tasks.module';
 import { BullModule } from '@nestjs/bullmq';
 import { AudiosModule } from './queues/audios.module';
 import { AuthModule } from './auth/auth.module';
-import { EventEmitter } from 'stream';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { FileController } from './streaming/file.controller';
-import { HttpModule } from '@nestjs/axios';
 import { DogsModule } from './dogs/dogs.moudle';
+import { UsersModule } from './users/users.module';
+import { User } from './models/user.model';
+
 @Module({
   imports: [
     SequelizeModule.forRoot({
@@ -27,7 +28,7 @@ import { DogsModule } from './dogs/dogs.moudle';
       database: 'book_song_db',
       autoLoadModels: true,
       synchronize: true,
-      models: [Book, Author],
+      models: [Book, Author, User],
     }),
     BullModule.forRoot({
       connection: {
@@ -38,6 +39,8 @@ import { DogsModule } from './dogs/dogs.moudle';
     EventEmitterModule.forRoot({
       wildcard: true,
     }),
+    AuthModule,
+    UsersModule,
     BooksModule,
     CoreConfigModule,
     CacheModule.register({
@@ -47,8 +50,7 @@ import { DogsModule } from './dogs/dogs.moudle';
     ScheduleModule.forRoot(),
     TasksModule,
     AudiosModule,
-    AuthModule,
-    DogsModule
+    DogsModule,
   ],
   providers: [
     {

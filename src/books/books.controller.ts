@@ -34,7 +34,6 @@ export class BooksController {
    * @usage: headers.Cookie: "sessionId=1; anotherCookie=abc"
    */
   @Get()
-  @UseGuards(AuthGuardService)
   @Roles(['admin'])
   findAll(@Req() request: express.Request) {
     //request.session.visits =  request.session?.visits ? request.session.visits + 1: 1;

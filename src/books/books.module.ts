@@ -13,9 +13,13 @@ import { Book } from 'src/models/book.model';
 import { Author } from 'src/models/author.model';
 import { AuthorsService } from 'src/authors/authors.service';
 import { AuthorsController } from 'src/authors/authors.controller';
+import { User } from 'src/models/user.model';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Book, Author])],
+  imports: [SequelizeModule.forFeature([Book, Author, User]),
+    AuthModule
+  ],
   providers: [BooksService, AuthorsService],
   controllers: [BooksController, AuthorsController],
 })

@@ -30,22 +30,6 @@ describe('AuthorsService', () => {
     authorsService = moduleRef.get<AuthorsService>(AuthorsService);
   });
 
-  describe('findByLastName', () => {
-    it('should return an array of authors for a given last name', async () => {
-      const lastName = 'Doe';
-      const mockAuthors = [
-        { id: 1, firstname: 'John', lastname: lastName },
-        { id: 2, firstname: 'Jane', lastname: lastName },
-      ];
-      mockAuthorModel.findAll.mockResolvedValue(mockAuthors);
-      const result = await authorsService.findByLastName(lastName);
-      expect(result).toBe(mockAuthors);
-      expect(mockAuthorModel.findAll).toHaveBeenCalledWith({
-        where: { lastname: lastName as any },
-      });
-    });
-  });
-
   describe('findAuthorBooks', () => {
     it('should return an array of books for a given author id', async () => {
       const authorId = 1;

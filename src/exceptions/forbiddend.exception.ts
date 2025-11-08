@@ -17,3 +17,9 @@ export class InvalidCredentialException extends HttpException {
     super('Invalid credentials', HttpStatus.NOT_FOUND);
   }
 }
+
+export class UserNofoundException extends HttpException {
+  constructor() {
+    super('User Not Found', HttpStatus.NOT_FOUND);
+  }
+}

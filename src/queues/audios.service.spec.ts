@@ -1,10 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Job } from 'bullmq';
 import { AudiosService } from './audios.service';
-import { time } from 'console';
+import { Logger } from '@nestjs/common';
+
+const mockLogger = {
+  log: jest.fn(),
+  error: jest.fn(),
+  warn: jest.fn(),
+  debug: jest.fn(),
+  verbose: jest.fn(),
+};
 
 describe('AudiosService', () => {
   let service: AudiosService;
+  let mockDelay: jest.Mock;
 
   const mockJob: Job = {
     id: '1',
@@ -14,51 +23,53 @@ describe('AudiosService', () => {
   } as unknown as Job;
 
   beforeEach(async () => {
-    jest.clearAllMocks();
+    mockDelay = jest.fn().mockResolvedValue(undefined);
+    jest.spyOn(Logger.prototype, 'log').mockImplementation(mockLogger.log);
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AudiosService],
+      providers: [
+        {
+          provide: AudiosService,
+          useFactory: () => new AudiosService(mockDelay),
+        },
+      ],
     }).compile();
-
-    jest.spyOn(console, 'log').mockImplementation(() => {}); // Mock console.log
-    jest.spyOn(global, 'setTimeout').mockImplementation((cb) => cb() as any); // Fast-forward timeouts
-
     service = module.get<AudiosService>(AudiosService);
   });
 
-  afterAll(() => {
-    (console.log as jest.Mock).mockRestore();
-    (global.setTimeout as unknown as jest.Mock).mockRestore();
+  afterEach(() => {
+    jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
-  describe('process', () => {
-    it('should process transcode job and update progress', async () => {
-      const result = await service.process(mockJob);
-      expect(result).toEqual({ message: 'Audio processing completed' });
-      expect(mockJob.updateProgress).toHaveBeenCalledTimes(100);
-      expect(console.log).toHaveBeenCalledWith(
-        'Processing audio job:',
-        mockJob.id,
-        mockJob.name,
-        mockJob.data,
-      );
-      expect(console.log).toHaveBeenCalledWith(
-        'Audio job completed:',
-        mockJob.id,
-        mockJob.data,
-      );
-    });
+  it('should process transcode job and update progress', async () => {
+    const result = await service.process(mockJob);
 
-    it('should throw error for unknown job name', async () => {
-      const unknownJob: Job = {
-        id: '2',
-        name: 'unknown',
-        data: {},
-        updateProgress: jest.fn(),
-      } as unknown as Job;
+    expect(result).toEqual({ message: 'Audio processing completed' });
+    expect(mockJob.updateProgress).toHaveBeenCalledTimes(100);
+    expect(mockLogger.log).toHaveBeenCalledWith(
+      'Processing audio job:',
+      mockJob.id,
+      mockJob.name,
+      mockJob.data,
+    );
+    expect(mockLogger.log).toHaveBeenCalledWith(
+      'Audio job completed:',
+      mockJob.id,
+      mockJob.data,
+    );
+  });
 
-      await expect(service.process(unknownJob)).rejects.toThrow(
-        'Unknown job name: unknown',
-      );
-    });
+  it('should throw error for unknown job name', async () => {
+    const unknownJob: Job = {
+      id: '2',
+      name: 'unknown',
+      data: {},
+      updateProgress: jest.fn(),
+    } as unknown as Job;
+
+    await expect(service.process(unknownJob)).rejects.toThrow(
+      'Unknown job name: unknown',
+    );
   });
 });

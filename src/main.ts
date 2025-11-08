@@ -39,10 +39,10 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 3600000
+        maxAge: 3600000,
       },
-    })
-  )
+    }),
+  );
 
   await app.listen(process.env.PORT ?? 3000);
 }

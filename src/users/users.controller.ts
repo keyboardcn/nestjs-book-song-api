@@ -54,11 +54,11 @@ export class UsersController {
   }
 
   @Patch(':id')
-  async update(
+  async patch(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateData: Partial<UserInterface>,
   ) {
-    return this.usersService.update(id, updateData);
+    return this.usersService.patch(id, updateData);
   }
 
   capitalize1stLetter(str: string) {

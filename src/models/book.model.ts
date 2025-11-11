@@ -19,6 +19,9 @@ export class Book extends Model<Book> {
   @Column
   declare publishedYear: number;
 
+  @Column
+  declare description: string;
+
   @ForeignKey(() => Author)
   @Column({ type: DataType.INTEGER })
   declare author_id: number;

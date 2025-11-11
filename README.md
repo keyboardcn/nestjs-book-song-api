@@ -117,6 +117,7 @@ npm i --save @nestjs/axios axios
 npm i express-session
 npm i -D @types/express-session
 npm install --save @nestjs/jwt
+npm i @casl/ability
 ```
 
 - psql into the pg and execute sql

@@ -55,10 +55,10 @@ export class AuthorsController {
 
   @Patch(':id')
   @Roles(['admin'])
-  async update(
+  async patch(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateData: Partial<AuthorInterface>,
   ) {
-    return this.authorsService.update(id, updateData);
+    return this.authorsService.patch(id, updateData);
   }
 }

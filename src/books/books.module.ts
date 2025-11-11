@@ -15,10 +15,11 @@ import { AuthorsService } from 'src/authors/authors.service';
 import { AuthorsController } from 'src/authors/authors.controller';
 import { User } from 'src/models/user.model';
 import { AuthModule } from 'src/auth/auth.module';
+import { CaslModule } from 'src/casl/caslAbility.module';
 
 @Module({
   imports: [SequelizeModule.forFeature([Book, Author, User]),
-    AuthModule
+    AuthModule, CaslModule
   ],
   providers: [BooksService, AuthorsService],
   controllers: [BooksController, AuthorsController],

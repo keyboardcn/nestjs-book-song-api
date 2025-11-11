@@ -16,6 +16,7 @@ import { FileController } from './streaming/file.controller';
 import { DogsModule } from './dogs/dogs.moudle';
 import { UsersModule } from './users/users.module';
 import { User } from './models/user.model';
+import { CaslModule } from './casl/caslAbility.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { User } from './models/user.model';
       wildcard: true,
     }),
     AuthModule,
+    CaslModule,
     UsersModule,
     BooksModule,
     CoreConfigModule,

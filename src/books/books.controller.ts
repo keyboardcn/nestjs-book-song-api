@@ -9,6 +9,7 @@ import {
   Req,
   UseGuards,
   UseInterceptors,
+  Patch,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { RolesGuard } from 'src/guard/roles.guard';
@@ -18,10 +19,13 @@ import * as sequelize from 'sequelize';
 import { Book } from 'src/models/book.model';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 import express from 'express';
-import { AuthGuardService } from 'src/auth/authguard.service';
+import { CheckPolicies } from 'src/casl/policy.decorator';
+import { AppAbility } from 'src/casl/caslAbilityFactory.service';
+import { Action } from 'src/casl/actions.enum';
+import { PolicyGuardService } from 'src/casl/policiesGuard.service';
 @Controller('books')
 @UseInterceptors(LoggingInterceptor, CacheInterceptor)
-@UseGuards(RolesGuard)
+@UseGuards(RolesGuard, PolicyGuardService)
 export class BooksController {
   private readonly logger = new Logger(BooksController.name);
   constructor(private readonly booksService: BooksService) {}
@@ -35,6 +39,7 @@ export class BooksController {
    */
   @Get()
   @Roles(['admin'])
+  @CheckPolicies((ablity: AppAbility) => ablity.can(Action.READ, Book))
   findAll(@Req() request: express.Request) {
     //request.session.visits =  request.session?.visits ? request.session.visits + 1: 1;
     // no more cookie here
@@ -61,4 +66,14 @@ export class BooksController {
   async create(@Body() bookData: sequelize.CreationAttributes<Book>) {
     return this.booksService.create(bookData);
   }
+
+  @Patch(':id')
+  @CheckPolicies((ablity: AppAbility) => ablity.can(Action.PATCH, Book))
+  async patch(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateData: Partial<Book>,
+  ) {
+    return this.booksService.patch(id, updateData);
+  }
+  
 }

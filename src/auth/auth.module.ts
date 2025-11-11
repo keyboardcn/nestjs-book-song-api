@@ -16,7 +16,7 @@ import { APP_GUARD } from '@nestjs/core';
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret as string,
-      signOptions: { expiresIn: '3600s' },
+      signOptions: { expiresIn: '36000s' },
     }),
   ],
   providers: [AuthService, UsersService, 

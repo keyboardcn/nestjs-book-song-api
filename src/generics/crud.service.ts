@@ -21,7 +21,7 @@ export class CrudService<T extends sequelizeTypescript.Model> {
     return this.model.create(tData);
   }
 
-  async update(id: number, updateData: Partial<T>): Promise<T | null> {
+  async patch(id: number, updateData: Partial<T>): Promise<T | null> {
     const instance = await this.model.findByPk(id);
     if (!instance) {
       return null;

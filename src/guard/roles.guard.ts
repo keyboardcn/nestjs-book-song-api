@@ -20,7 +20,7 @@ export class RolesGuard implements CanActivate {
     const userRoles = request.headers['user']
       ? JSON.parse(request.headers['user'])
       : undefined;
-    this.logger.log('roles.guard.ts', userRoles);
+    this.logger.log(`${JSON.stringify(userRoles)}`);
     return roles.some((role) => userRoles?.roles?.includes(role));
   }
 }

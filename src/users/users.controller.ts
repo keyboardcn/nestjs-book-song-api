@@ -18,6 +18,7 @@ import { User } from 'src/models/user.model';
 import { UserEntity, UserInterface } from './users.interface';
 import { RolesGuard } from 'src/guard/roles.guard';
 import { Roles } from 'src/guard/roles.decorator';
+import * as bcrypt from 'bcrypt';
 
 @Controller({ path: 'users' })
 @UseInterceptors(LoggingInterceptor, CacheInterceptor)
@@ -50,6 +51,7 @@ export class UsersController {
 
   @Post()
   async create(@Body() userData: CreationAttributes<User>) {
+    userData.password = await this.hash_password(userData.password);
     return this.usersService.create(userData);
   }
 
@@ -58,10 +60,18 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateData: Partial<UserInterface>,
   ) {
+    if (updateData.hasOwnProperty('password') && updateData.password?.length) {
+      updateData.password = await this.hash_password(updateData.password);
+    }
     return this.usersService.patch(id, updateData);
   }
 
   capitalize1stLetter(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+
+  private async hash_password(pwd: string) {
+    const saltOrRounds = 10;
+    return await bcrypt.hash(pwd, saltOrRounds);
   }
 }

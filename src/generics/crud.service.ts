@@ -13,7 +13,7 @@ export class CrudService<T extends sequelizeTypescript.Model> {
     return this.model.findAll();
   }
 
-  findByPk(id: number): Promise<T | null> {
+  async findByPk(id: number): Promise<T | null> {
     return this.model.findByPk(id);
   }
 

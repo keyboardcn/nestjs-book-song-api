@@ -38,7 +38,7 @@ export class AuthorsController {
   @Get(':id')
   @Roles(['user'])
   async findByPk(@Param('id', ParseIntPipe) id: number) {
-    const rst = await this.authorsService.findByPk(id);
+    return this.authorsService.findByPk(id);
   }
 
   @Get(':id/books')

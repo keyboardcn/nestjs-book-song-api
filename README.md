@@ -118,6 +118,8 @@ npm i express-session
 npm i -D @types/express-session
 npm install --save @nestjs/jwt
 npm i @casl/ability
+npm i bcrypt
+npm i -D @types/bcrypt
 ```
 
 - psql into the pg and execute sql
